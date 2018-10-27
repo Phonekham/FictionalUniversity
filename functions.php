@@ -6,3 +6,8 @@ function university_files(){
     wp_enqueue_style('font-awesome', get_theme_file_uri('/font-awesome/css/font-awesome.min.css'));
 }
 add_action('wp_enqueue_scripts', 'university_files');
+
+function university_features(){
+    add_theme_support('title-tag');
+}
+add_action('after_setup_theme', 'university_features');
