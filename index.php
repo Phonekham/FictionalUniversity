@@ -23,7 +23,9 @@
         <p><a class="btn btn--blue" href="<?php the_permalink(); ?>">Coutinue Reading &raquo;</a></p>
       </div>
     </div>
-  <?php } ?>
+  <?php }
+  echo paginate_links();
+  ?>
   </div>
 
 <?php get_footer(); ?>
