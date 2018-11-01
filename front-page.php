@@ -17,7 +17,7 @@
         <?php 
         $today = date('Ymd');
         $homepageEvent = new WP_Query(array(
-          'posts_per_page'  =>  -1, //give all posts that meet condition
+          'posts_per_page'  =>  2, 
           'post_type'       =>  'event',
           'meta_key'        =>  'event_date',
           'orderby'         =>  'meta_value_num', //extra,custom data assosiate with the post
