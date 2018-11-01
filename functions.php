@@ -24,7 +24,7 @@ function university_adjust_queries($query){
         $query->set('meta_query',  array(
             array(
               'key'   =>  'event_date',
-              'compare' =>  '<=',
+              'compare' =>  '>=',
               'value'   =>  $today,
               'type'    =>  'numeric'
             )
