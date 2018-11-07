@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+
 <?php
 while(have_posts()){
     the_post() ?>
@@ -18,6 +19,31 @@ while(have_posts()){
         <h2><?php the_title(); ?></h2>
         <div class="generic-content"> <?php the_content(); ?>  </div> 
         <?php 
+
+        $relativeProfessor = new WP_Query(array(
+          'posts_per_page'  =>  -1, 
+          'post_type'       =>  'professor',
+          'orderby'         =>  'title', 
+          'order'           =>  'ASC',
+          'meta_query'      =>  array(
+            array(
+                'key'   =>  'related_programs', 
+                'compare'   =>  'LIKE',
+                'value'     => '"' . get_the_ID() . '"'
+            )
+          )
+        ));
+        if($relativeProfessor->have_posts()){
+            echo "<hr class='section-break'>";
+            echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professors</h2>';
+    
+            while($relativeProfessor->have_posts()){
+              $relativeProfessor->the_post() ?>
+              <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+           <?php }
+        }
+        wp_reset_postdata();
+
         $today = date('Ymd');
         $homepageEvent = new WP_Query(array(
           'posts_per_page'  =>  2, 
