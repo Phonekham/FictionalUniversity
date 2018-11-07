@@ -17,6 +17,48 @@ while(have_posts()){
         </div>
         <h2><?php the_title(); ?></h2>
         <div class="generic-content"> <?php the_content(); ?>  </div> 
+        <?php 
+        $today = date('Ymd');
+        $homepageEvent = new WP_Query(array(
+          'posts_per_page'  =>  2, 
+          'post_type'       =>  'event',
+          'meta_key'        =>  'event_date',
+          'orderby'         =>  'meta_value_num', //extra,custom data assosiate with the post
+          'order'           =>  'ASC',
+          'meta_query'      =>  array(
+            array(
+              'key'   =>  'event_date',
+              'compare' =>  '>=',
+              'value'   =>  $today,
+              'type'    =>  'numeric'
+            ),
+            array(
+                'key'   =>  'related_programs', //array
+                'compare'   =>  'LIKE',
+                'value'     => '"' . get_the_ID() . '"'
+            )
+          )
+        ));
+        while($homepageEvent->have_posts()){
+          $homepageEvent->the_post() ?>
+        <div class="event-summary">
+          <a class="event-summary__date event-summary__date t-center" href="<?php the_permalink(); ?>">
+            <span class="event-summary__month"><?php 
+            $eventDate = new DateTime(get_field('event_date'));
+            echo $eventDate->format('M')
+            ?></span>
+            <span class="event-summary__day"><?php echo $eventDate->format('d') ?></span>  
+          </a>
+          <div class="event-summary__content">
+            <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+            <p><?php if(has_excerpt()){
+             echo get_the_excerpt();
+            }else{
+              echo wp_trim_words(get_the_content(), 18);
+            } ?><a href="<?php the_permalink(); ?>" class="nu gray"> Learn more</a></p>
+          </div>
+        </div>
+       <?php } ?>   
     </div>
 <?php } ?>
 
