@@ -13653,7 +13653,7 @@ function () {
   }, {
     key: "keyPressDispatcher",
     value: function keyPressDispatcher(e) {
-      if (e.keyCode == 83 && !this.isOverlayOpen) {
+      if (e.keyCode == 83 && !this.isOverlayOpen && (0, _jquery.default)("input", "textarea").is(":focus")) {
         this.openOverlay();
       }
 
