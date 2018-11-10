@@ -13617,8 +13617,10 @@ function () {
     this.openButton = (0, _jquery.default)(".js-search-trigger");
     this.closeButton = (0, _jquery.default)('.search-overlay__close');
     this.searchOverlay = (0, _jquery.default)(".search-overlay");
+    this.searchField = (0, _jquery.default)("#search-term");
     this.events();
     this.isOverlayOpen = false;
+    this.typingTimer;
   } // 2. events
 
 
@@ -13628,6 +13630,7 @@ function () {
       this.openButton.on("click", this.openOverlay.bind(this));
       this.closeButton.on("click", this.closeOverlay.bind(this));
       (0, _jquery.default)(document).on("keydown", this.keyPressDispatcher.bind(this));
+      this.searchField.on("keydown", this.typingLogic.bind(this));
     } // 3. methods(functions/actions) 
 
   }, {
@@ -13654,6 +13657,14 @@ function () {
       if (e.keyCode == 27 && this.isOverlayOpen) {
         this.closeOverlay();
       }
+    }
+  }, {
+    key: "typingLogic",
+    value: function typingLogic() {
+      clearTimeout(this.typingTimer);
+      this.typingTimer = setTimeout(function () {
+        console.log("hhhh");
+      }, 2000);
     }
   }]);
 
