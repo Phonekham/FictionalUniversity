@@ -57,9 +57,10 @@ class Search{
         }    
        this.previusValue = this.searchField.val();
     }
-    getResults(){
-        this.resultsDiv.html("search results");
-        this.isSpinnerVisible = false;
+    getResults(){9
+        $.getJSON('http://localhost:3000/FictionalUniversity/wp-json/wp/v2/posts?search=' + this.searchField.val(),function(posts){
+            alert(posts[0].title.rendered);
+        });
     }
 }
 export default Search; // Allow us to import this code to main script file

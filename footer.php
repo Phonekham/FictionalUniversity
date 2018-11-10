@@ -68,7 +68,7 @@
     </div>
     <div class="container">
       <div id="search-overlay__results">
-        You ysearch
+        
       </div>
     </div>
   </div>

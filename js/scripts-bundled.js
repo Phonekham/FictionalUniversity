@@ -13685,8 +13685,11 @@ function () {
   }, {
     key: "getResults",
     value: function getResults() {
-      this.resultsDiv.html("search results");
-      this.isSpinnerVisible = false;
+      9;
+
+      _jquery.default.getJSON('http://localhost:3000/FictionalUniversity/wp-json/wp/v2/posts?search=' + this.searchField.val(), function (posts) {
+        alert(posts[0].title.rendered);
+      });
     }
   }]);
 
