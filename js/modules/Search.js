@@ -61,9 +61,11 @@ class Search{
        this.previusValue = this.searchField.val();
     }
     getResults(){
-        $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), posts => {
-           $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val(), pages => {
-             var combinesResults = posts.concat(pages);
+        $.when(
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()),
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())
+            ).then((posts,pages) => {
+            var combinesResults = posts[0].concat(pages[0]);
             this.resultsDiv.html(`
             <h2 class="search-overlay__section-title">General Information</h2>
            ${combinesResults.length ? ' <ul class="link-list min-list">' : '<p>No information match the search</p>'}
@@ -71,7 +73,8 @@ class Search{
             ${combinesResults.length ? '</ul>' : ''}
         `);
         this.isSpinnerVisible = false;
-           })
+        }, () => {
+            this.resultsDiv.html("<p>Error try again</p>");
         });
     }
     addSearchHTML(){

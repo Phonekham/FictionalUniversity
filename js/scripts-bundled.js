@@ -13694,16 +13694,16 @@ function () {
     value: function getResults() {
       var _this2 = this;
 
-      _jquery.default.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), function (posts) {
-        _jquery.default.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + _this2.searchField.val(), function (pages) {
-          var combinesResults = posts.concat(pages);
+      _jquery.default.when(_jquery.default.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()), _jquery.default.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())).then(function (posts, pages) {
+        var combinesResults = posts[0].concat(pages[0]);
 
-          _this2.resultsDiv.html("\n            <h2 class=\"search-overlay__section-title\">General Information</h2>\n           ".concat(combinesResults.length ? ' <ul class="link-list min-list">' : '<p>No information match the search</p>', "\n                ").concat(combinesResults.map(function (item) {
-            return "<li><a href=\"".concat(item.link, "\">").concat(item.title.rendered, "</a></li>");
-          }).join(''), "\n            ").concat(combinesResults.length ? '</ul>' : '', "\n        "));
+        _this2.resultsDiv.html("\n            <h2 class=\"search-overlay__section-title\">General Information</h2>\n           ".concat(combinesResults.length ? ' <ul class="link-list min-list">' : '<p>No information match the search</p>', "\n                ").concat(combinesResults.map(function (item) {
+          return "<li><a href=\"".concat(item.link, "\">").concat(item.title.rendered, "</a></li>");
+        }).join(''), "\n            ").concat(combinesResults.length ? '</ul>' : '', "\n        "));
 
-          _this2.isSpinnerVisible = false;
-        });
+        _this2.isSpinnerVisible = false;
+      }, function () {
+        _this2.resultsDiv.html("<p>Error try again</p>");
       });
     }
   }, {
