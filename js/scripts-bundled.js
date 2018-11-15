@@ -13643,6 +13643,7 @@ function () {
       this.searchOverlay.addClass("search-overlay--active");
       (0, _jquery.default)("body").addClass("body-no-scroll");
       this.isOverlayOpen = true;
+      return false;
     }
   }, {
     key: "closeOverlay",
@@ -13655,7 +13656,7 @@ function () {
       setTimeout(function () {
         return _this.searchField.focus();
       }, 301);
-      this.isOverlayOpen = true;
+      this.isOverlayOpen = false;
     }
   }, {
     key: "keyPressDispatcher",

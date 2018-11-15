@@ -27,17 +27,18 @@ class Search{
         this.searchOverlay.addClass("search-overlay--active");
         $("body").addClass("body-no-scroll");
         this.isOverlayOpen = true;
+        return false;
     }
     closeOverlay(){
         this.searchOverlay.removeClass("search-overlay--active");
         $("body").removeClass("body-no-scroll");
         this.searchField.val('');
         setTimeout(() => this.searchField.focus() ,301);
-        this.isOverlayOpen = true;
+        this.isOverlayOpen = false;
     }
     keyPressDispatcher(e){
         if(e.keyCode == 83 && !this.isOverlayOpen && $("input", "textarea").is(":focus")){
-            this.openOverlay();
+            this.openOverlay(); 
         }
         if(e.keyCode == 27 && this.isOverlayOpen){
             this.closeOverlay();
