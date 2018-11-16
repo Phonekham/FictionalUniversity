@@ -98,3 +98,19 @@ function noSubAdminBar(){
         show_admin_bar(false);
     }
 }
+
+//Customize login screen
+add_filter('login_headerurl', 'ourHeaderUrl');
+function ourHeaderUrl(){
+    return esc_url(site_url('/'));
+}
+
+add_action('login_enqueue_scripts', 'ourLoginCSS');
+function ourLoginCSS(){
+    wp_enqueue_style('university_main_style', get_stylesheet_uri(),NULL,microtime()); //Enqueue style.css
+}
+
+add_filter('login_headertitle', 'ourLoginTitle');
+function ourLoginTitle(){
+    return get_bloginfo('name');
+}
