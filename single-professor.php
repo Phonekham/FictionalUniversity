@@ -40,7 +40,7 @@ while(have_posts()){
                         $existsStatus = 'yes';
                     }
                     ?>
-                    <span class="like-box" data-exists="<?php echo $existsStatus; ?>">
+                    <span class="like-box" data-professor="<?php the_ID(); ?>" data-exists="<?php echo $existsStatus; ?>">
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                         <i class="fa fa-heart" aria-hidden="true"></i>
                         <span class="like-count"><?php echo $likeCount->found_posts; ?></span>
