@@ -13762,9 +13762,10 @@ function () {
   _createClass(MyNotes, [{
     key: "events",
     value: function events() {
-      (0, _jquery.default)(".delete-note").on("click", this.deleteNote);
-      (0, _jquery.default)(".edit-note").on("click", this.editNote.bind(this));
-      (0, _jquery.default)(".update-note").on("click", this.updateNote.bind(this));
+      (0, _jquery.default)("#my-notes").on("click", ".delete-note", this.deleteNote);
+      (0, _jquery.default)("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+      (0, _jquery.default)("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
+      (0, _jquery.default)(".submit-note").on("click", this.createNote.bind(this));
     } //Method
 
   }, {
@@ -13837,6 +13838,34 @@ function () {
         success: function success(Response) {
           _this.makeNoteReadonly(thisNote);
 
+          console.log("congrates");
+          console.log(Response);
+        },
+        error: function error(Response) {
+          console.log("Sorry");
+          console.log(Response);
+        }
+      });
+    }
+  }, {
+    key: "createNote",
+    value: function createNote(e) {
+      var ourNewPost = {
+        'title': (0, _jquery.default)(".new-note-title").val(),
+        'content': (0, _jquery.default)(".new-note-body").val(),
+        'status': 'publish'
+      };
+
+      _jquery.default.ajax({
+        beforeSend: function beforeSend(xhr) {
+          xhr.setRequestHeader('X-WP-Nonce', universityData.nonce);
+        },
+        url: universityData.root_url + '/wp-json/wp/v2/note/',
+        type: 'POST',
+        data: ourNewPost,
+        success: function success(response) {
+          (0, _jquery.default)(".new-note-title, .new-note-body").val('');
+          (0, _jquery.default)("\n               <li data-id=\"".concat(response.id, "\">\n               <input readonly class=\"note-title-field\" value=\"").concat(response.title.raw, "\">\n               <span class=\"edit-note\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i> Edit</span>\n               <span class=\"delete-note\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i> Delete</span>\n               <textarea readonly class=\"note-body-field\">").concat(response.content.raw, "</textarea>\n               <span class=\"update-note btn btn--blue btn--small\" aria-hidden=\"true\"><i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i> Save</span>\n               </li>\n               ")).prependTo("#my-notes").hide().slideDown();
           console.log("congrates");
           console.log(Response);
         },
