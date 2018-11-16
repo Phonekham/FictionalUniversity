@@ -19,10 +19,13 @@ class MyNotes{
             },
             url: universityData.root_url + '/wp-json/wp/v2/note/' + thisNote.data('id'),
             type: 'DELETE',
-            success: (Response) => {
+            success: (response) => {
                 thisNote.slideUp()
                 console.log("congrates");
-                console.log(Response);
+                console.log(response);
+                if(response.userNoteCount < 5){
+                    $(".note-limit-message").removeClass("active");
+                } //remove warning message after delete
             },
             error: (Response) => {
                 console.log("Sorry");
@@ -102,9 +105,12 @@ class MyNotes{
                 console.log("congrates");
                 console.log(Response);
             },
-            error: (Response) => {
+            error: (response) => {
+                if(response.responseText == "You have reach your note limit"){
+                    $(".note-limit-message").addClass("active");
+                }
                 console.log("Sorry");
-                console.log(Response);
+                console.log(response);
             } 
         });
     }

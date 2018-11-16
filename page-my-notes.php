@@ -18,7 +18,7 @@ get_header(); ?>
           <input class="new-note-title" placeholder="Title">
           <textarea class="new-note-body" placeholder="Your note here"></textarea>
           <span class="submit-note">Create Note</span>
-
+          <span class="note-limit-message">Note: limit reached</span>
       </div>
     <ul class="link-list min-list" id="my-notes">
         <?php
