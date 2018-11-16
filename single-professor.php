@@ -25,20 +25,23 @@ while(have_posts()){
                     )); 
 
                     $existsStatus = 'no';
-                    $existsQuery = new WP_Query(array(
-                        'author'     =>  get_current_user_id(),
-                        'post_type'     =>  'like',
-                        'meta_query'      =>  array(
-                            array(
-                                'key'       =>  'liked_professor_id',
-                            'compare'       =>  '=',
-                            'value'         =>  get_the_ID()
+                    if(is_user_logged_in()){
+                        $existsQuery = new WP_Query(array(
+                            'author'     =>  get_current_user_id(),
+                            'post_type'     =>  'like',
+                            'meta_query'      =>  array(
+                                array(
+                                    'key'       =>  'liked_professor_id',
+                                'compare'       =>  '=',
+                                'value'         =>  get_the_ID()
+                                )
                             )
-                        )
-                    )); 
-                    if ($existsQuery->found_posts) {
-                        $existsStatus = 'yes';
+                        )); 
+                        if ($existsQuery->found_posts) {
+                            $existsStatus = 'yes';
+                        }
                     }
+                  
                     ?>
                     <span class="like-box" data-professor="<?php the_ID(); ?>" data-exists="<?php echo $existsStatus; ?>">
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
