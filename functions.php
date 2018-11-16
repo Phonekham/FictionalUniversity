@@ -80,3 +80,21 @@ function PageBanner($args = null){
     </div>
 <?php }
 add_action('pre_get_posts','university_adjust_queries');
+
+//Redirect Subscriber account sto homepage
+add_action('admin_init', 'redirectSubsToFrontend');
+function redirectSubsToFrontend(){
+    $ourCurrentUSer = wp_get_current_user();
+    if (count($ourCurrentUSer->roles) == 1 AND $ourCurrentUSer->roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+
+add_action('wp_loaded', 'noSubAdminBar');
+function noSubAdminBar(){
+    $ourCurrentUSer = wp_get_current_user();
+    if (count($ourCurrentUSer->roles) == 1 AND $ourCurrentUSer->roles[0] == 'subscriber') {
+        show_admin_bar(false);
+    }
+}
